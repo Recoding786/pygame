@@ -1,0 +1,54 @@
+import random
+import time
+
+class OceanArchaeologyGame:
+    def __init__(self):
+        self.player_health = 100
+        self.artifacts_found = []
+        self.depth = 0
+        self.max_depth = 1000  # Maximum depth in meters
+        self.environmental_dangers = ["shark", "jellyfish", "whirlpool"]
+        self.artifacts = ["ancient vase", "golden idol", "shipwreck", "fossilized remains"]
+
+    def dive(self):
+        while self.depth < self.max_depth and self.player_health > 0:
+            self.depth += random.randint(10, 50)
+            print(f"Diving deeper... Current depth: {self.depth} meters")
+            self.encounter()
+
+    def encounter(self):
+        if random.random() < 0.3:  # 30% chance of encountering danger
+            danger = random.choice(self.environmental_dangers)
+            print(f"Encountered a {danger}!")
+            self.handle_danger(danger)
+        elif random.random() < 0.5:  # 50% chance of finding an artifact
+            artifact = random.choice(self.artifacts)
+            self.artifacts_found.append(artifact)
+            print(f"Found an artifact: {artifact}!")
+
+    def handle_danger(self, danger):
+        if danger == "shark":
+            self.player_health -= 30
+            print("You were attacked by a shark! Health reduced.")
+        elif danger == "jellyfish":
+            self.player_health -= 10
+            print("You were stung by a jellyfish! Health reduced.")
+        elif danger == "whirlpool":
+            self.player_health -= 50
+            print("You were caught in a whirlpool! Health reduced.")
+
+        if self.player_health <= 0:
+            print("You have succumbed to the dangers of the deep ocean.")
+
+    def start_game(self):
+        print("Welcome to Deep Ocean Archaeology!")
+        self.dive()
+        if self.player_health > 0:
+            print("You surfaced safely!")
+            print(f"Artifacts found: {self.artifacts_found}")
+        else:
+            print("Game Over.")
+
+if __name__ == "__main__":
+    game = OceanArchaeologyGame()
+    game.start_game()
